@@ -1,0 +1,33 @@
+vector<vector<int>> getTreeTraversal(TreeNode *root){
+    vector<int> inorder;
+     vector<int> preorder;
+      vector<int> postorder;
+      stack<pair<TreeNode*,int> >s;
+      TreeNode * temp;
+      s.push({root, 1});
+      while(!s.empty()){
+          auto it= s.top();
+          s.pop();
+          TreeNode * temp=it.first;
+          int num= it.second;
+          if(num==1){
+             preorder.push_back(temp->data);
+             s.push({temp,2});
+             if(temp->left){
+                 s.push({temp->left,1});
+             }
+          }
+          else if(num==2){
+              inorder.push_back(temp->data);
+             s.push({temp,3});
+             if(temp->right){
+                 s.push({temp->right,1});
+             }
+          }
+          else{
+               postorder.push_back(temp->data);
+          }
+      }
+
+      return {inorder,preorder,postorder};
+}
