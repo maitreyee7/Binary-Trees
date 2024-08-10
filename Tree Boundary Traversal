@@ -1,0 +1,74 @@
+class Solution {
+public:
+
+    bool isLeaf(Node* node){
+        if(node->left==NULL && node->right==NULL){
+            return true;
+        }
+        return false;
+    }
+    
+    void addleft(Node* node, vector<int>&ans){
+            Node* cur= node->left;
+            while(cur){
+                if(!isLeaf(cur)){
+                    ans.push_back(cur->data);
+                }
+                if(cur->left){
+                    cur=cur->left;
+                }
+                else{
+                    cur=cur->right;
+                }
+            }
+          
+    }
+    
+    void addright(Node* node , vector<int> &ans){
+        vector<int>temp;
+        Node* cur= node->right;
+        while(cur){
+            if(!isLeaf(cur)){
+                    temp.push_back(cur->data);
+                }
+             if(cur->right){
+                    cur=cur->right;
+                }
+                else{
+                    cur=cur->left;
+                }
+        }
+        for(int i=temp.size()-1; i>=0;i--){
+            ans.push_back(temp[i]);
+        }
+    }
+    
+    void addleaves(Node* node, vector<int> & ans){
+        if(isLeaf(node)){
+            ans.push_back(node->data);
+            return;
+        }
+        if(node->left) addleaves(node->left,ans);
+         if(node->right) addleaves(node->right,ans);
+    }
+    
+    vector <int> boundary(Node *root)
+    {
+        vector<int> ans;
+        if(root==NULL){
+            return ans;
+            
+        }
+        if(root!=NULL && root->left==NULL && root->right==NULL){
+            ans.push_back(root->data);
+            return ans;
+        }
+        ans.push_back(root->data);
+        addleft(root,ans);
+        addleaves(root,ans);
+        addright(root,ans);
+        
+        return ans;
+        
+    }
+};
