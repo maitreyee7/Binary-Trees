@@ -1,0 +1,17 @@
+class Solution {
+public:
+    bool isSymmetric(TreeNode* root) {
+        if(root==NULL){
+            return true;
+        }
+        return isSymhelp(root->left, root->right);
+    }
+    bool isSymhelp(TreeNode* left, TreeNode* right){
+        if(left==NULL || right==NULL){
+            return left==right;
+        }
+        if(left->val!= right->val) return false;
+
+        return isSymhelp(left->left, right->right) && isSymhelp(left->right, right->left); 
+    }
+};
