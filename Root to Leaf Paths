@@ -1,0 +1,29 @@
+class Solution {
+  public:
+  
+  void helper(Node* root,  vector<vector<int>> &ans,vector<int>a ){
+      if(root==NULL){
+          return;
+      }
+      if(root!=NULL){
+          a.push_back(root->data);
+      }
+      if(root->right==NULL && root->left==NULL){
+          ans.push_back(a);
+      }
+      helper(root->left,ans,a);
+      helper(root->right,ans,a);
+      a.pop_back();
+      
+  }
+    
+  
+    vector<vector<int>> Paths(Node* root) {
+        vector<vector<int>> ans;
+        vector<int>a;
+        if(root==NULL){
+            return ans;
+        }
+        helper(root,ans,a);
+    }
+};
