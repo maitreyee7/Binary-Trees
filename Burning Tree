@@ -1,0 +1,76 @@
+class Solution {
+  public:
+ int timetaken(map<Node*,Node*>m,Node* res){
+      
+         map<Node*, bool>vis;
+        queue<Node*>q;
+        vis[res]=true;
+        q.push(res);
+        int maxi=0;
+         while(!q.empty()){
+             int fl=0;
+             int s=q.size();
+             
+             for(int i=0;i<s;i++){
+                 res =q.front();
+                 q.pop();
+                 if(res->left && !vis[res->left]){
+                     q.push(res->left);
+                     vis[res->left]=true;
+                     fl=1;
+                 }
+                  if(res->right && !vis[res->right]){
+                     q.push(res->right);
+                     vis[res->right]=true;
+                     fl=1;
+                 }
+                 if(m[res] && !vis[m[res]]){
+                     q.push(m[res]);
+                     vis[m[res]]=true;
+                     fl=1;
+                 }
+                 
+             }
+             if(fl){
+                     maxi++;
+                 }
+             
+         }
+         return maxi;
+ }
+  Node* markparentsTarget(map<Node*,Node*> &m, Node* root, int target){
+      queue<Node*>q;
+      Node* res;
+      q.push(root);
+      while(!q.empty()){
+          root= q.front();
+          if(root->data==target){
+              res=root;
+          }
+          q.pop();
+          
+              if(root->left){
+                  m[root->left]= root;
+                  q.push(root->left);
+              }
+              if(root->right){
+                  m[root->right]= root;
+                  q.push(root->right);
+              }
+          
+      }
+      return res;
+  }
+    int minTime(Node* root, int target) 
+    {
+       
+        int t;
+         map<Node*,Node*>m;
+        Node* res;
+        res=markparentsTarget(m, root,target);
+        int maxi= timetaken(m,res);
+        
+      
+        return maxi;
+    }
+};
